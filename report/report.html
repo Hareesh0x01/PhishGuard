@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PhishGuard — Full Scan Report</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="report.css"/>
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="nav">
+    <div class="nav-logo">
+      <svg class="nav-logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span>Phish<span class="c">Guard</span></span>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn" id="copy-url-btn" title="Copy URL">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        Copy URL
+      </button>
+      <button class="nav-btn" id="rescan-btn" title="Re-scan">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+        Re-scan
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== NO DATA STATE ==================== -->
+  <div class="no-data" id="no-data" hidden>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <h2>No Scan Data</h2>
+    <p>Open the PhishGuard popup, scan a website, then click <strong>View Full Report</strong>.</p>
+  </div>
+
+  <!-- ==================== REPORT CONTENT ==================== -->
+  <main class="report" id="report-content" hidden>
+
+    <!-- VERDICT BANNER -->
+    <section class="verdict-banner" id="verdict-banner">
+      <div class="verdict-left">
+        <div class="verdict-icon-wrap" id="verdict-icon"></div>
+        <div>
+          <div class="verdict-label" id="verdict-label">SAFE</div>
+          <div class="verdict-sublabel" id="verdict-sub">No threats detected</div>
+        </div>
+      </div>
+      <div class="verdict-right">
+        <div class="verdict-score" id="verdict-score">0</div>
+        <div class="verdict-score-label">/ 100 risk</div>
+      </div>
+    </section>
+
+    <!-- URL + META -->
+    <section class="meta-card">
+      <div class="meta-row">
+        <span class="meta-key">URL</span>
+        <span class="meta-val url-mono" id="report-url">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Hostname</span>
+        <span class="meta-val url-mono" id="report-hostname">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Scanned</span>
+        <span class="meta-val" id="report-time">—</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-key">Engine</span>
+        <span class="meta-val">Heuristic + URLhaus + PhishTank + Safe Browsing</span>
+      </div>
+    </section>
+
+    <!-- RISK SCORE BAR -->
+    <section class="score-section">
+      <div class="score-header">
+        <span class="section-title">Risk Score</span>
+        <span class="score-badge" id="score-badge">0 / 100</span>
+      </div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" id="score-bar-fill"></div>
+        <div class="score-bar-marker" id="score-bar-marker"></div>
+      </div>
+      <div class="score-scale">
+        <span>0 — Safe</span><span>50 — Moderate</span><span>100 — Critical</span>
+      </div>
+    </section>
+
+    <!-- THREAT ENGINE RESULTS -->
+    <section class="section">
+      <h2 class="section-title">Threat Engine Results</h2>
+      <div class="engines-grid">
+
+        <div class="engine-card" id="card-urlhaus">
+          <div class="engine-card-header">
+            <div class="engine-logo urlhaus-logo">UH</div>
+            <div>
+              <div class="engine-card-name">URLhaus</div>
+              <div class="engine-card-by">Abuse.ch — Malware DB</div>
+            </div>
+            <div class="engine-card-badge" id="badge-urlhaus">—</div>
+          </div>
+          <div class="engine-card-detail" id="detail-urlhaus">—</div>
+          <div class="engine-card-meta" id="meta-urlhaus">No key required</div>
+        </div>
+
+        <div class="engine-card" id="card-phishtank">
+          <div class="engine-card-header">
+            <div class="engine-logo phishtank-logo">PT</div>
+            <div>
+              <div class="engine-card-name">PhishTank</div>
+              <div class="engine-card-by">OpenDNS — Phishing DB</div>
+            </div>
+            <div class="engine-card-badge" id="badge-phishtank">—</div>
+          </div>
+          <div class="engine-card-detail" id="detail-phishtank">—</div>
+          <div class="engine-card-meta" id="meta-phishtank">Free API key</div>
+        </div>
+
+        <div class="engine-card" id="card-safebrowsing">
+          <div class="engine-card-header">
+            <div class="engine-logo sb-logo">SB</div>
+            <div>
+              <div class="engine-card-name">Safe Browsing</div>
+              <div class="engine-card-by">Google — Threat DB</div>
+            </div>
+            <div class="engine-card-badge" id="badge-safebrowsing">—</div>
+          </div>
+          <div class="engine-card-detail" id="detail-safebrowsing">—</div>
+          <div class="engine-card-meta" id="meta-safebrowsing">Free API key</div>
+        </div>
+
+        <div class="engine-card" id="card-heuristic">
+          <div class="engine-card-header">
+            <div class="engine-logo heuristic-logo">H</div>
+            <div>
+              <div class="engine-card-name">Heuristic Engine</div>
+              <div class="engine-card-by">PhishGuard — Local analysis</div>
+            </div>
+            <div class="engine-card-badge" id="badge-heuristic">—</div>
+          </div>
+          <div class="engine-card-detail" id="detail-heuristic">15-point URL check + DOM analysis</div>
+          <div class="engine-card-meta" id="meta-heuristic">No network required</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- URL ANALYSIS TABLE -->
+    <section class="section">
+      <h2 class="section-title">URL Analysis — Heuristic Findings</h2>
+      <table class="findings-table" id="url-table">
+        <thead>
+          <tr>
+            <th>Finding</th>
+            <th>Severity</th>
+          </tr>
+        </thead>
+        <tbody id="url-tbody"></tbody>
+      </table>
+    </section>
+
+    <!-- PAGE CONTENT TABLE -->
+    <section class="section" id="page-section">
+      <h2 class="section-title">Page Content Analysis</h2>
+
+      <!-- Raw signals summary -->
+      <div class="signals-grid" id="signals-grid"></div>
+
+      <table class="findings-table" id="page-table">
+        <thead>
+          <tr>
+            <th>Finding</th>
+            <th>Severity</th>
+          </tr>
+        </thead>
+        <tbody id="page-tbody"></tbody>
+      </table>
+    </section>
+
+    <!-- API CONFIGURATION -->
+    <section class="section config-section">
+      <h2 class="section-title">API Key Configuration</h2>
+      <p class="config-desc">
+        Add your free API keys to enable live threat-database lookups.
+        Keys are stored locally in your browser and never sent anywhere except the respective API.
+      </p>
+
+      <div class="config-grid">
+
+        <div class="config-card">
+          <div class="config-card-header">
+            <div class="engine-logo phishtank-logo">PT</div>
+            <div>
+              <div class="config-card-title">PhishTank API Key</div>
+              <a class="config-link" href="https://www.phishtank.com/api_register.php" target="_blank" rel="noopener">
+                Register free → phishtank.com
+              </a>
+            </div>
+          </div>
+          <div class="config-input-row">
+            <input type="password" class="config-input" id="input-phishtank"
+                   placeholder="Paste your PhishTank API key…" autocomplete="off"/>
+            <button class="config-save-btn" data-key="phishtank_key" data-input="input-phishtank">Save</button>
+          </div>
+          <div class="config-status" id="status-phishtank"></div>
+        </div>
+
+        <div class="config-card">
+          <div class="config-card-header">
+            <div class="engine-logo sb-logo">SB</div>
+            <div>
+              <div class="config-card-title">Google Safe Browsing Key</div>
+              <a class="config-link" href="https://console.cloud.google.com/apis/library/safebrowsing.googleapis.com" target="_blank" rel="noopener">
+                Enable in Google Cloud Console →
+              </a>
+            </div>
+          </div>
+          <div class="config-input-row">
+            <input type="password" class="config-input" id="input-safebrowsing"
+                   placeholder="Paste your Safe Browsing API key…" autocomplete="off"/>
+            <button class="config-save-btn" data-key="safebrowsing_key" data-input="input-safebrowsing">Save</button>
+          </div>
+          <div class="config-status" id="status-safebrowsing"></div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="page-footer">
+    <span>PhishGuard &copy; 2026</span>
+    <span class="footer-sep">·</span>
+    <span>Heuristic + Multi-Engine Threat Detection</span>
+    <span class="footer-sep">·</span>
+    <span>Phase 2</span>
+  </footer>
+
+  <script src="report.js"></script>
+</body>
+</html>

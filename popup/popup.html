@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span class="logo-text">Phish<span class="logo-accent">Guard</span></span>
+    </div>
+    <span class="version-badge">v1.0</span>
+  </header>
+
+  <main class="main">
+
+    <!-- CURRENT SITE -->
+    <section class="site-info" aria-label="Current website">
+      <p class="site-label">Analyzing site</p>
+      <p class="site-url" id="current-url">—</p>
+    </section>
+
+    <!-- STATUS CARD -->
+    <section class="status-card" id="status-card" aria-live="polite">
+      <div class="status-icon-wrap" id="status-icon-wrap"></div>
+      <div class="status-text">
+        <h2 class="status-title" id="status-title">Not Scanned</h2>
+        <p class="status-message" id="status-message">
+          Click <strong>Scan Now</strong> to analyse this page for threats.
+        </p>
+      </div>
+    </section>
+
+    <!-- RISK SCORE -->
+    <section class="risk-section" aria-label="Risk score">
+      <div class="risk-header">
+        <span class="risk-label">Risk Score</span>
+        <span class="risk-value" id="risk-value">—</span>
+      </div>
+      <div class="risk-bar-track" role="progressbar"
+           aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="risk-bar-fill" id="risk-bar-fill"></div>
+      </div>
+      <div class="risk-scale">
+        <span>Safe</span><span>Moderate</span><span>Dangerous</span>
+      </div>
+    </section>
+
+    <!-- ENGINE STATUS ROW (shown after scan) -->
+    <section class="engines-row" id="engines-row" hidden aria-label="API engine results">
+      <div class="engine-chip" id="chip-urlhaus">
+        <span class="engine-dot" id="dot-urlhaus"></span>
+        <span class="engine-name">URLhaus</span>
+        <span class="engine-val" id="val-urlhaus">—</span>
+      </div>
+      <div class="engine-chip" id="chip-phishtank">
+        <span class="engine-dot" id="dot-phishtank"></span>
+        <span class="engine-name">PhishTank</span>
+        <span class="engine-val" id="val-phishtank">—</span>
+      </div>
+      <div class="engine-chip" id="chip-safebrowsing">
+        <span class="engine-dot" id="dot-safebrowsing"></span>
+        <span class="engine-name">SafeBrowse</span>
+        <span class="engine-val" id="val-safebrowsing">—</span>
+      </div>
+    </section>
+
+    <!-- FINDINGS LIST -->
+    <section class="findings-section" id="findings-section" hidden aria-label="Findings">
+      <p class="findings-label">Findings</p>
+      <ul class="findings-list" id="findings-list"></ul>
+    </section>
+
+    <!-- SCAN BUTTON -->
+    <button class="scan-btn" id="scan-btn" type="button">
+      <svg id="scan-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="23 4 23 10 17 10"/>
+        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+      </svg>
+      <span id="scan-btn-label">Scan Now</span>
+    </button>
+
+    <!-- VIEW FULL REPORT BUTTON (hidden until scan done) -->
+    <button class="report-btn" id="report-btn" type="button" hidden>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round"
+           stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      View Full Report
+    </button>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>PhishGuard &copy; 2026</span>
+    <span class="footer-dot">·</span>
+    <span>Heuristic + API Engine</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

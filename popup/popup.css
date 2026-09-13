@@ -1,0 +1,250 @@
+/* ============================================================
+   PhishGuard — popup.css
+   ============================================================ */
+
+:root {
+  --bg-primary:   #0d1117;
+  --bg-secondary: #161b22;
+  --bg-card:      #1c2230;
+
+  --accent-cyan:   #00d4ff;
+  --accent-green:  #3fb950;
+  --accent-yellow: #e3b341;
+  --accent-red:    #f85149;
+  --accent-blue:   #58a6ff;
+
+  --text-primary: #e6edf3;
+  --text-muted:   #8b949e;
+  --text-dim:     #484f58;
+  --border:       #30363d;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --font-mono: 'Courier New', Courier, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --transition: 180ms ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 340px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 15px 11px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+.logo { display: flex; align-items: center; gap: 8px; }
+.logo-icon { width: 21px; height: 21px; color: var(--accent-cyan); }
+.logo-text { font-size: 16px; font-weight: 700; letter-spacing: -.3px; }
+.logo-accent { color: var(--accent-cyan); }
+.version-badge {
+  font-size: 10px; font-family: var(--font-mono);
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 7px;
+}
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 13px 13px 13px;
+}
+
+/* ── Site info ── */
+.site-info {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 11px;
+}
+.site-label {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .8px;
+  color: var(--text-muted); margin-bottom: 1px;
+}
+.site-url {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--accent-cyan);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── Status card ── */
+.status-card {
+  display: flex; align-items: center; gap: 11px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 11px;
+  transition: border-color 300ms ease;
+}
+.status-card.state-safe    { border-color: var(--accent-green); }
+.status-card.state-warning { border-color: var(--accent-yellow); }
+.status-card.state-danger  { border-color: var(--accent-red); }
+
+.status-icon-wrap { flex-shrink: 0; }
+.status-icon       { width: 32px; height: 32px; }
+.status-icon.idle  { color: var(--text-muted); }
+.status-icon.safe  { color: var(--accent-green); }
+.status-icon.warn  { color: var(--accent-yellow); }
+.status-icon.danger{ color: var(--accent-red); }
+
+.status-title   { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.status-message { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+.status-message strong { color: var(--text-primary); }
+
+/* ── Risk score ── */
+.risk-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 11px;
+}
+.risk-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+.risk-label {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .7px; color: var(--text-muted);
+}
+.risk-value { font-family: var(--font-mono); font-size: 16px; font-weight: 700; }
+.risk-bar-track {
+  height: 5px; background: var(--bg-card);
+  border-radius: 99px; overflow: hidden; margin-bottom: 5px;
+}
+.risk-bar-fill {
+  height: 100%; width: 0%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-yellow) 50%, var(--accent-red) 100%);
+  background-size: 340px 100%;
+  transition: width 600ms cubic-bezier(.4,0,.2,1);
+}
+.risk-scale { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-dim); }
+
+/* ── Engine chips ── */
+.engines-row {
+  display: flex;
+  gap: 6px;
+}
+.engine-chip {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 6px 4px;
+  min-width: 0;
+}
+.engine-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+}
+.engine-dot.clean    { background: var(--accent-green); box-shadow: 0 0 5px var(--accent-green); }
+.engine-dot.threat   { background: var(--accent-red);   box-shadow: 0 0 5px var(--accent-red); }
+.engine-dot.warn     { background: var(--accent-yellow); box-shadow: 0 0 5px var(--accent-yellow); }
+.engine-dot.error    { background: var(--text-dim); }
+.engine-dot.nokey    { background: var(--text-dim); opacity: .4; }
+
+.engine-name { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+.engine-val  { font-size: 10px; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+
+/* ── Findings ── */
+.findings-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 9px 11px;
+  max-height: 130px;
+  overflow-y: auto;
+}
+.findings-section::-webkit-scrollbar { width: 3px; }
+.findings-section::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.findings-label {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .7px;
+  color: var(--text-muted); margin-bottom: 6px;
+}
+.findings-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+.finding-item {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-size: 11px; line-height: 1.4;
+  padding: 4px 7px; border-radius: var(--radius-sm);
+}
+.finding-item.level-safe   { background: rgba(63,185,80,.08);  color: var(--accent-green); }
+.finding-item.level-info   { background: rgba(88,166,255,.08); color: var(--accent-blue); }
+.finding-item.level-warn   { background: rgba(227,179,65,.08); color: var(--accent-yellow); }
+.finding-item.level-danger { background: rgba(248,81,73,.08);  color: var(--accent-red); }
+
+.finding-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
+}
+.level-safe   .finding-dot { background: var(--accent-green); }
+.level-info   .finding-dot { background: var(--accent-blue); }
+.level-warn   .finding-dot { background: var(--accent-yellow); }
+.level-danger .finding-dot { background: var(--accent-red); }
+
+/* ── Scan button ── */
+.scan-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; padding: 10px 16px;
+  background: linear-gradient(135deg, #005f73, #0077b6);
+  border: none; border-radius: var(--radius-md);
+  color: #fff; font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+}
+.scan-btn:hover:not(:disabled) { opacity: .9; transform: translateY(-1px); }
+.scan-btn:active:not(:disabled) { transform: translateY(0); }
+.scan-btn:disabled { opacity: .5; cursor: not-allowed; }
+.scan-btn svg { width: 15px; height: 15px; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.scan-btn.scanning svg { animation: spin .9s linear infinite; }
+
+/* ── Report button ── */
+.report-btn {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; padding: 9px 16px;
+  background: transparent;
+  border: 1px solid var(--accent-cyan);
+  border-radius: var(--radius-md);
+  color: var(--accent-cyan); font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.report-btn:hover { background: rgba(0,212,255,.07); transform: translateY(-1px); }
+.report-btn:active { transform: translateY(0); }
+.report-btn svg { width: 14px; height: 14px; }
+
+/* ── Footer ── */
+.footer {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  font-size: 10px; color: var(--text-dim);
+}
+.footer-dot { color: var(--border); }
